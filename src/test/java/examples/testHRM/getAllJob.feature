@@ -10,7 +10,7 @@ Feature: Put API demo
     When method get
     Then status 200
     And print response
-    * def parseXml = read('utils/ParseXML.js')
+    * def parseXml = read('utils/jsUtils.js')
     * def token = parseXml().getToken(response)
     * print token
 
