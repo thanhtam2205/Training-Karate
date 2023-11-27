@@ -1,22 +1,21 @@
-@PostAllJob
+@PostJob
 Feature: Post job API demo
   Background:
     * url 'https://opensource-demo.orangehrmlive.com/web/index.php'
 
-  Scenario: Get all job
+  Scenario: Add job successfully wit existedtitle
 
     Given path 'auth/login'
     When method get
     Then status 200
     And print response
-    * def parseXml = read('utils/jsUtils.js')
-    * def token = parseXml().getToken(response)
+    * def jsUtils = read('../utils/jsUtils.js')
+    * def token = jsUtils().getToken(response)
     * print token
 
     Given path 'auth/validate'
     * configure followRedirects = false
     And headers {Content-Type : 'application/x-www-form-urlencoded'}
-    #And request {"username" : 'Admin', "password": 'admin123', "_token" : '#(token)'}
     And form field username = 'Admin'
     And form field password = 'admin123'
     And form field _token = token
@@ -25,28 +24,26 @@ Feature: Post job API demo
     * def cookie = responseCookies
     * print cookie
 
-    * def data =
-    """
-    {
-    "title": "QA automation150 ",
-    "description": "none",
-    "specification": {
-        "base64":"IlRhbSIsIiIsIkxlIiwiMzY5NiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiI=",
-        "name": "text.txt",
-        "type": "text/plain",
-        "size": 74
-    },
-    "note": null
-}
-    """
+    * def data = read('testData/TC_03.json')
+    And data.title = data.title + jsUtils().getCurrentDate()
+
     Given path 'api/v2/admin/job-titles'
     And headers {Content-Type : 'application/json', Cookie: '#(cookie)'}
     And request data
     When method post
     Then status 200
-    And print response
-    And print response.data.id
+    And print response.data
     * def id = response.data.id
+
+    Given path 'api/v2/admin/job-titles'
+    And headers {Content-Type : 'application/json', Cookie: '#(cookie)'}
+    And request data
+    When method post
+    Then status 422
+
+    * match response.error.status == '422'
+    * match response.error.message == 'Invalid Parameter'
+    * match response.error.data.invalidParamKeys[0] == 'title'
 
     * def ids =
     """
@@ -61,4 +58,3 @@ Feature: Post job API demo
     And request ids
     When method delete
     Then status 200
-    And print response

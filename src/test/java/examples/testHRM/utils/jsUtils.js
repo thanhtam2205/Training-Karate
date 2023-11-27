@@ -10,6 +10,11 @@ function() {
       let index3 = token1.indexOf("&quot");
       const token2 = token1.slice(0,index3);
     return token2;
+    },
+    getCurrentDate: function(){
+      var date = new java.util.Date();
+      return date;
+
     }
   }
 }
