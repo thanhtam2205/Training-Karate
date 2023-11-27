@@ -16,7 +16,6 @@ Feature: Put API demo
     Given path 'auth/validate'
     * configure followRedirects = false
     And headers {Content-Type : 'application/x-www-form-urlencoded'}
-    #And request {"username" : 'Admin', "password": 'admin123', "_token" : '#(token)'}
     And form field username = 'Admin'
     And form field password = 'admin123'
     And form field _token = token

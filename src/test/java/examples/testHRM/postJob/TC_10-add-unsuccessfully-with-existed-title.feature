@@ -45,16 +45,10 @@ Feature: Post job API demo
     * match response.error.message == 'Invalid Parameter'
     * match response.error.data.invalidParamKeys[0] == 'title'
 
-    * def ids =
-    """
-    {
-      "ids" : ['#(id)']
-    }
-    """
 
     Given path 'api/v2/admin/job-titles'
     And headers { Cookie: '#(cookie)'}
     And headers {Content-Type : 'application/json'}
-    And request ids
+    And request { "ids" : ['#(id)']}
     When method delete
     Then status 200

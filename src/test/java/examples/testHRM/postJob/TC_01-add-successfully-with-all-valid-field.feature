@@ -44,16 +44,10 @@ Feature: Post job API demo
     * match response.data.jobSpecification.fileType == data.specification.type
     * match response.data.jobSpecification.fileSize == data.specification.size
 
-    * def ids =
-    """
-    {
-      "ids" : ['#(id)']
-    }
-    """
 
     Given path 'api/v2/admin/job-titles'
     And headers { Cookie: '#(cookie)'}
     And headers {Content-Type : 'application/json'}
-    And request ids
+    And request { "ids" : ['#(id)']}
     When method delete
     Then status 200

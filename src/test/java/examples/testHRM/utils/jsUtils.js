@@ -15,6 +15,11 @@ function() {
       var date = new java.util.Date();
       return date;
 
+    },
+    getIDOfBlankTitle: function(response){
+      for(let i = 0; i < response.data.length; i++)
+      if (response.data[i].title == "") return response.data[i].id;
+      return -1;
     }
   }
 }

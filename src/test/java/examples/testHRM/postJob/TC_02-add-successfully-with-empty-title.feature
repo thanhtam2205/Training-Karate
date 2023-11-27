@@ -24,6 +24,22 @@ Feature: Post job API demo
     * def cookie = responseCookies
     * print cookie
 
+    #get all job
+    Given path 'api/v2/admin/job-titles'
+    And params { "offset": 0, "sortField": "jt.jobTitleName", "sortOrder": "ASC"}
+    And headers { Cookie: '#(cookie)'}
+    When method get
+    Then status 200
+
+    * def idTitle = jsUtils().getIDOfBlankTitle(response)
+    # delete blank title
+    Given path 'api/v2/admin/job-titles'
+    And headers { Cookie: '#(cookie)'}
+    And headers {Content-Type : 'application/json'}
+    And request { "ids" : ['#(idTitle)']}
+    When method delete
+    Then status 200
+
     * def data = read('testData/TC_02.json')
 
     Given path 'api/v2/admin/job-titles'
@@ -43,16 +59,10 @@ Feature: Post job API demo
     * match response.data.jobSpecification.fileType == data.specification.type
     * match response.data.jobSpecification.fileSize == data.specification.size
 
-    * def ids =
-    """
-    {
-      "ids" : ['#(id)']
-    }
-    """
 
     Given path 'api/v2/admin/job-titles'
     And headers { Cookie: '#(cookie)'}
     And headers {Content-Type : 'application/json'}
-    And request ids
+    And request { "ids" : ['#(id)']}
     When method delete
     Then status 200
