@@ -10,6 +10,16 @@ function() {
       let index3 = token1.indexOf("&quot");
       const token2 = token1.slice(0,index3);
     return token2;
+    },
+    getCurrentDate: function(){
+      var date = new java.util.Date();
+      return date;
+
+    },
+    getIDOfBlankTitle: function(response){
+      for(let i = 0; i < response.data.length; i++)
+      if (response.data[i].title == "") return response.data[i].id;
+      return -1;
     }
   }
 }
