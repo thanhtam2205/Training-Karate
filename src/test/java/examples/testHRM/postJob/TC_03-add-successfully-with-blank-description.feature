@@ -1,4 +1,5 @@
 @PostJob
+@tc
 Feature: Post job API demo
   Background:
     * url 'https://opensource-demo.orangehrmlive.com/web/index.php'
@@ -21,8 +22,8 @@ Feature: Post job API demo
     And form field _token = token
     When method post
     Then status 302
-    * def cookie = responseCookies
-    * print cookie
+#    * def cookie = responseCookies
+#    * print cookie
 
     * def data = read('testData/TC_03.json')
     And data.title = data.title + jsUtils().getCurrentDate()

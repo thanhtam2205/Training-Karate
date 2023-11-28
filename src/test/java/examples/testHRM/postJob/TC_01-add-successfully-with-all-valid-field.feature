@@ -1,31 +1,35 @@
 @PostJob
+@tc
 Feature: Post job API demo
   Background:
     * url 'https://opensource-demo.orangehrmlive.com/web/index.php'
-
-  Scenario: Add job successfully with all valid field
-
-    Given path 'auth/login'
-    When method get
-    Then status 200
-    And print response
+    * def authen = callonce read('../config/authentication/login.feature')
     * def jsUtils = read('../utils/jsUtils.js')
-    * def token = jsUtils().getToken(response)
-    * print token
-
-    Given path 'auth/validate'
-    * configure followRedirects = false
-    And headers {Content-Type : 'application/x-www-form-urlencoded'}
-    And form field username = 'Admin'
-    And form field password = 'admin123'
-    And form field _token = token
-    When method post
-    Then status 302
-    * def cookie = responseCookies
-    * print cookie
-
+    * def cookie = 'orangehrm='+authen.cookie.orangehrm.value
     * def data = read('testData/TC_01.json')
     And data.title = data.title + jsUtils().getCurrentDate()
+
+
+    Scenario: Add job successfully with all valid field
+
+#    Given path 'auth/login'
+#    When method get
+#    Then status 200
+#    And print response
+#    * def jsUtils = read('../utils/jsUtils.js')
+#    * def token = jsUtils().getToken(response)
+#    * print token
+#
+#    Given path 'auth/validate'
+#    * configure followRedirects = false
+#    And headers {Content-Type : 'application/x-www-form-urlencoded'}
+#    And form field username = 'Admin'
+#    And form field password = 'admin123'
+#    And form field _token = token
+#    When method post
+#    Then status 302
+#    * def cookie = responseCookies
+#    * print cookie
 
     Given path 'api/v2/admin/job-titles'
     And headers {Content-Type : 'application/json', Cookie: '#(cookie)'}
