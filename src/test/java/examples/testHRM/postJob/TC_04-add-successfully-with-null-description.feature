@@ -3,7 +3,7 @@ Feature: Post job API demo
   Background:
     * url 'https://opensource-demo.orangehrmlive.com/web/index.php'
 
-  Scenario: Add job successfully with all valid field
+  Scenario: Add job successfully with null description
 
     Given path 'auth/login'
     When method get
@@ -24,7 +24,7 @@ Feature: Post job API demo
     * def cookie = responseCookies
     * print cookie
 
-    * def data = read('testData/TC_01.json')
+    * def data = read('testData/TC_04.json')
     And data.title = data.title + jsUtils().getCurrentDate()
 
     Given path 'api/v2/admin/job-titles'
@@ -37,7 +37,7 @@ Feature: Post job API demo
 
     * match response.data.id == '#number'
     * match response.data.title == data.title
-    * match response.data.description == data.description
+    * match response.data.description == '#null'
     * match response.data.note == data.note
     * match response.data.jobSpecification.id == '#number'
     * match response.data.jobSpecification.filename == data.specification.name
@@ -45,6 +45,7 @@ Feature: Post job API demo
     * match response.data.jobSpecification.fileSize == data.specification.size
     * match response.meta == '#[0]'
     * match response.rels == '#[0]'
+
 
     Given path 'api/v2/admin/job-titles'
     And headers { Cookie: '#(cookie)'}

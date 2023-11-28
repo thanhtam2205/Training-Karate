@@ -3,7 +3,7 @@ Feature: Post job API demo
   Background:
     * url 'https://opensource-demo.orangehrmlive.com/web/index.php'
 
-  Scenario: Add job successfully with all valid field
+  Scenario: Add job successfully wit blank title
 
     Given path 'auth/login'
     When method get
@@ -24,8 +24,23 @@ Feature: Post job API demo
     * def cookie = responseCookies
     * print cookie
 
-    * def data = read('testData/TC_01.json')
-    And data.title = data.title + jsUtils().getCurrentDate()
+    #get all job
+    Given path 'api/v2/admin/job-titles'
+    And params { "offset": 0, "sortField": "jt.jobTitleName", "sortOrder": "ASC"}
+    And headers { Cookie: '#(cookie)'}
+    When method get
+    Then status 200
+
+    * def idTitle = jsUtils().getIDOfBlankTitle(response)
+    # delete blank title
+    Given path 'api/v2/admin/job-titles'
+    And headers { Cookie: '#(cookie)'}
+    And headers {Content-Type : 'application/json'}
+    And request { "ids" : ['#(idTitle)']}
+    When method delete
+    Then status 200
+
+    * def data = read('testData/TC_02.json')
 
     Given path 'api/v2/admin/job-titles'
     And headers {Content-Type : 'application/json', Cookie: '#(cookie)'}
@@ -45,6 +60,7 @@ Feature: Post job API demo
     * match response.data.jobSpecification.fileSize == data.specification.size
     * match response.meta == '#[0]'
     * match response.rels == '#[0]'
+
 
     Given path 'api/v2/admin/job-titles'
     And headers { Cookie: '#(cookie)'}

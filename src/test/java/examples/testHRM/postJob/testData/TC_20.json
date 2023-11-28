@@ -1,10 +1,10 @@
 {
   "title": "QA automation",
-  "description": "",
+  "description": "none",
   "specification": {
     "base64":"IlRhbSIsIiIsIkxlIiwiMzY5NiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiI=",
     "name": "text.txt",
-    "type": "text/plain",
+    "type": "abc",
     "size": 74
   },
   "note": "none"

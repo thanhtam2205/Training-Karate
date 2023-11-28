@@ -3,7 +3,7 @@ Feature: Post job API demo
   Background:
     * url 'https://opensource-demo.orangehrmlive.com/web/index.php'
 
-  Scenario: Add job unsuccessfully with existed title
+  Scenario: Add job unsuccessfully with filesize not equals 74
 
     Given path 'auth/login'
     When method get
@@ -24,16 +24,7 @@ Feature: Post job API demo
     * def cookie = responseCookies
     * print cookie
 
-    * def data = read('testData/TC_10.json')
-    And data.title = data.title + jsUtils().getCurrentDate()
-
-    Given path 'api/v2/admin/job-titles'
-    And headers {Content-Type : 'application/json', Cookie: '#(cookie)'}
-    And request data
-    When method post
-    Then status 200
-    And print response.data
-    * def id = response.data.id
+    * def data = read('testData/TC_23.json')
 
     Given path 'api/v2/admin/job-titles'
     And headers {Content-Type : 'application/json', Cookie: '#(cookie)'}
@@ -43,12 +34,4 @@ Feature: Post job API demo
 
     * match response.error.status == '422'
     * match response.error.message == 'Invalid Parameter'
-    * match response.error.data.invalidParamKeys[0] == 'title'
-
-
-    Given path 'api/v2/admin/job-titles'
-    And headers { Cookie: '#(cookie)'}
-    And headers {Content-Type : 'application/json'}
-    And request { "ids" : ['#(id)']}
-    When method delete
-    Then status 200
+    * match response.error.data.invalidParamKeys[0] == 'specification'
