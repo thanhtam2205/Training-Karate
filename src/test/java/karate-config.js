@@ -6,7 +6,7 @@ function fn() {
   }
   var config = {
     env: env,
-    myVarName: 'someValue'
+    baseUrl: 'https://opensource-demo.orangehrmlive.com/web/index.php'
   }
   if (env == 'dev') {
     // customize

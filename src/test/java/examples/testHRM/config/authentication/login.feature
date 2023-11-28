@@ -1,6 +1,6 @@
 Feature: Login
   Background:
-    * url 'https://opensource-demo.orangehrmlive.com/web/index.php'
+    * url baseUrl
 
   Scenario: Validate and login into system
 

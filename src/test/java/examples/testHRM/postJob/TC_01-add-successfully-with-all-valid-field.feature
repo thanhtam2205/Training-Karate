@@ -2,7 +2,7 @@
 @tc
 Feature: Post job API demo
   Background:
-    * url 'https://opensource-demo.orangehrmlive.com/web/index.php'
+    * url baseUrl
     * def authen = callonce read('../config/authentication/login.feature')
     * def jsUtils = read('../utils/jsUtils.js')
     * def cookie = 'orangehrm='+authen.cookie.orangehrm.value
