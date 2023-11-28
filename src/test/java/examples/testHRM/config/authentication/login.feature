@@ -4,7 +4,7 @@ Feature: Login
 
   Scenario: Validate and login into system
 
-    Given path 'auth/login'
+    Given path loginPath
     When method get
     Then status 200
     And print response
@@ -12,7 +12,7 @@ Feature: Login
     * def token = jsUtils().getToken(response)
     * print token
 
-    Given path 'auth/validate'
+    Given path validatePath
     * configure followRedirects = false
     And headers {Content-Type : 'application/x-www-form-urlencoded'}
     And form field username = 'Admin'
