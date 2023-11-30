@@ -23,7 +23,16 @@ Feature: Post job API demo
     And print response.data
     * def id = response.data.id
 
-    * match response == jsUtils().getExpectedResponseForPostJob(testData)
+    * match response.data.id == <expectedJobId>
+    * match response.data.title == <expectedJobTitle>
+    * match response.data.description == <expectedDescription>
+    * match response.data.note == <expectedNote>
+    * match response.data.jobSpecification.id == <expectJobSpecificationId>
+    * match response.data.jobSpecification.filename == <expectJobSpecificationName>
+    * match response.data.jobSpecification.fileType == <expectJobSpecificationType>
+    * match response.data.jobSpecification.fileSize == <expectJobSpecificationSize>
+    * match response.meta == <expectedMeta>
+    * match response.rels == <expectedRels>
 
     Given path jobTitlePath
     And headers { Cookie: '#(cookie)'}
@@ -31,31 +40,13 @@ Feature: Post job API demo
     And request { "ids" : ['#(id)']}
     When method delete
     Then status 200
-#    * match response.data.id == '#number'
-#    * match response.data.title == '<title>'
-#    * match response.data.description == '<description>'
-#    * match response.data.note == '<note>'
-#    * match response.data.jobSpecification.id == '#number'
-#    * match response.data.jobSpecification.filename == data.specification.name
-#    * match response.data.jobSpecification.fileType == data.specification.type
-#    * match response.data.jobSpecification.fileSize == data.specification.size
-#    * match response.meta == '#[0]'
-#    * match response.rels == '#[0]'
 
     Examples:
-      |data               |
-      |testData/TC_01.json|
-      |testData/TC_03.json|
-      |testData/TC_04.json|
-      |testData/TC_05.json|
-      |testData/TC_06.json|
-      |testData/TC_07.json|
-      |testData/TC_08.json|
-
-
-
-#    Examples:
-#      |title          | description   |specification  |note       |expected          |
-#      |QA automation  | "none"   |{"base64":"IlRhbSIsIiIsIkxlIiwiMzY5NiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiI=","name": "text.txt","type": "text/plain","size": 74}  |note       |expected          |
-#      |title  | description   |specification  |note       |expected          |
-#      |title  | description   |specification  |note       |expected          |
+      |data                | expectedJobId! |expectedJobTitle|expectedDescription  |expectedNote  |expectJobSpecificationId |expectJobSpecificationName  |expectJobSpecificationType  |expectJobSpecificationSize  |expectedMeta|expectedRels|
+      |testData/TC_01.json |'#number'      |testData.title  |testData.description |testData.note |'#number'                |testData.specification.name |testData.specification.type |testData.specification.size |'#[0]'      |'#[0]'      |
+      |testData/TC_03.json |'#number'      |testData.title  |'#null'              |testData.note |'#number'                |testData.specification.name |testData.specification.type |testData.specification.size |'#[0]'      |'#[0]'      |
+      |testData/TC_04.json |'#number'      |testData.title  |'#null'              |testData.note |'#number'                |testData.specification.name |testData.specification.type |testData.specification.size |'#[0]'      |'#[0]'      |
+      |testData/TC_05.json |'#number'      |testData.title  |testData.description |testData.note |'#null'                  |'#null'                     |'#null'                     |'#null'                     |'#[0]'      |'#[0]'      |
+      |testData/TC_06.json |'#number'      |testData.title  |testData.description |testData.note |'#null'                  |'#null'                     |'#null'                     |'#null'                     |'#[0]'      |'#[0]'      |
+      |testData/TC_07.json |'#number'      |testData.title  |testData.description |'#null'       |'#number'                |testData.specification.name |testData.specification.type |testData.specification.size |'#[0]'      |'#[0]'      |
+      |testData/TC_08.json |'#number'      |testData.title  |testData.description |'#null'       |'#number'                |testData.specification.name |testData.specification.type |testData.specification.size |'#[0]'      |'#[0]'      |
