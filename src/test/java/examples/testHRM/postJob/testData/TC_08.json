@@ -1,11 +1,11 @@
 {
-  "title": "QA automation3",
-  "description": "",
+  "title": "QA automation8",
+  "description": "none",
   "specification": {
     "base64":"IlRhbSIsIiIsIkxlIiwiMzY5NiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiI=",
     "name": "text.txt",
     "type": "text/plain",
     "size": 74
   },
-  "note": "none"
+  "note": null
 }

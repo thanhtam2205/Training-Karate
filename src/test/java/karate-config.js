@@ -6,7 +6,10 @@ function fn() {
   }
   var config = {
     env: env,
-    myVarName: 'someValue'
+    baseUrl: 'https://opensource-demo.orangehrmlive.com/web/index.php',
+    loginPath: 'auth/login',
+    validatePath:'auth/validate',
+    jobTitlePath: 'api/v2/admin/job-titles'
   }
   if (env == 'dev') {
     // customize

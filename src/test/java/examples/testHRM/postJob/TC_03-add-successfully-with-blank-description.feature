@@ -1,9 +1,10 @@
 @PostJob
+@tc
 Feature: Post job API demo
   Background:
     * url 'https://opensource-demo.orangehrmlive.com/web/index.php'
 
-  Scenario: Add job successfully wit empty title
+  Scenario: Add job successfully with blank description
 
     Given path 'auth/login'
     When method get
@@ -21,26 +22,11 @@ Feature: Post job API demo
     And form field _token = token
     When method post
     Then status 302
-    * def cookie = responseCookies
-    * print cookie
+#    * def cookie = responseCookies
+#    * print cookie
 
-    #get all job
-    Given path 'api/v2/admin/job-titles'
-    And params { "offset": 0, "sortField": "jt.jobTitleName", "sortOrder": "ASC"}
-    And headers { Cookie: '#(cookie)'}
-    When method get
-    Then status 200
-
-    * def idTitle = jsUtils().getIDOfBlankTitle(response)
-    # delete blank title
-    Given path 'api/v2/admin/job-titles'
-    And headers { Cookie: '#(cookie)'}
-    And headers {Content-Type : 'application/json'}
-    And request { "ids" : ['#(idTitle)']}
-    When method delete
-    Then status 200
-
-    * def data = read('testData/TC_02.json')
+    * def data = read('testData/TC_03.json')
+    And data.title = data.title + jsUtils().getCurrentDate()
 
     Given path 'api/v2/admin/job-titles'
     And headers {Content-Type : 'application/json', Cookie: '#(cookie)'}
@@ -52,12 +38,14 @@ Feature: Post job API demo
 
     * match response.data.id == '#number'
     * match response.data.title == data.title
-    * match response.data.description == data.description
+    * match response.data.description == '#null'
     * match response.data.note == data.note
     * match response.data.jobSpecification.id == '#number'
     * match response.data.jobSpecification.filename == data.specification.name
     * match response.data.jobSpecification.fileType == data.specification.type
     * match response.data.jobSpecification.fileSize == data.specification.size
+    * match response.meta == '#[0]'
+    * match response.rels == '#[0]'
 
 
     Given path 'api/v2/admin/job-titles'
