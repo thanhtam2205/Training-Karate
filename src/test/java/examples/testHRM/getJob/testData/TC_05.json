@@ -1,0 +1,5 @@
+{
+  "limit": 50,
+  "sortField": "jt.jobTitleName",
+  "sortOrder": "ASC"
+}
