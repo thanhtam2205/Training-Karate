@@ -19,49 +19,30 @@ function() {
       if (response.data[i].title == "") return response.data[i].id;
       return -1;
     },
-//    getExpectedResponseForPostJob(request){
-//       let data = {
-//            "id":'#number',
-//            "title": request.title,
-//            "description": request.description,
-//            "note": request.note,
-//            "jobSpecification": {
-//                "id": '#number',
-//                "filename":"",
-//                "fileType": "",
-//                "fileSize": "",
-//                }
-//       };
-//
-//       if (request.description == "" || request.description == null ) data.description = null;
-//       if (request.note == "" || request.note == null ) data.note = null;
-//       if (request.note == "" || request.note == null ) data.note = null;
-//       if (request.specification == "" || request.specification == null )
-//          {
-//             data.jobSpecification.id = null;
-//             data.jobSpecification.filename = null;
-//             data.jobSpecification.fileType = null;
-//             data.jobSpecification.fileSize = null;
-//          }
-//          else {
-//             data.jobSpecification.filename = request.specification.name;
-//             data.jobSpecification.fileType = request.specification.type;
-//             data.jobSpecification.fileSize = request.specification.size;
-//          }
-//       return {"data": data, "meta": [],"rels": []};
-//    },
-//    formatTestData(testData) {
-//      let formatData = {
-//                "title": (testData.title == "") ? "" : (testData.title + getCurrentDate()),
-//                "description": (testData.description == "") ? null : (testData.description + getCurrentDate()),
-//                "note": (testData.note == "") ? null : (testData.note + getCurrentDate()),
-//                "specification": (testData.specification == "" || testData.specification == "") ? null : (testData.note + getCurrentDate()),{
-//                    "base64": testData.base64,
-//                    "name":testData.name,
-//                    "type": testData.type,
-//                    "size": testData.size,
-//                    }
-//           };
-//    }
+    getExpectedResponseForGetAllJob(param,response){
+       let job = {
+            "id":'#number',
+            "title": '#notnull',
+            "description": '#present',
+            "note": '#present',
+            "jobSpecification": {
+                "id": '#present',
+                "filename":'#present',
+                "fileType": '#present',
+                "fileSize": '#present',
+                }
+       };
+       let data = [];
+       for (let i = 0; i <= response.data.length-1; i++) {
+          data.push(job);
+       }
+
+       let offset = ("offset" in param) ? param.offset : 0;
+
+       if (data.length + offset > response.data.length)
+       return {"data": data, "meta": {"total": '#number'},"rels": []};
+       else return {"data": data, "meta": {"total": data.length + offset },"rels": []};
+
+       }
   }
 }
